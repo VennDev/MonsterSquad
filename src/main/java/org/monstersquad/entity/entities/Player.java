@@ -4,7 +4,6 @@ import org.monstersquad.entity.Entity;
 import org.monstersquad.game.GamePanel;
 import org.monstersquad.handler.KeyHandler;
 
-import javax.swing.*;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
@@ -44,23 +43,25 @@ public class Player extends Entity {
         BufferedImage image = null;
 
         switch (direction) {
-            case "up":
-                image = runs[0];
-                break;
-            case "down":
-                image = runs[1];
-                break;
-            case "left":
-                image = runs[2];
-                break;
-            case "right":
-                image = runs[3];
-                break;
+            case "down", "right" -> {
+                updateSprite(10, 6);
+                image = runsRight[spriteNumber];
+            }
+            case "up", "left" -> {
+                updateSprite(10, 6);
+                image = runsLeft[spriteNumber];
+            }
+            case "idle" -> {
+                updateSprite(10, 8);
+                image = idle[spriteNumber];
+            }
         }
 
         if (image != null) {
             g2d.drawImage(image, x, y, gamePanel.tileSize + sizeX, gamePanel.tileSize + sizeY, gamePanel);
         }
+
+        direction = "idle";
     }
 
     @Override
